@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { AulaService } from './aula.service'; 
 import { AulaDto } from './dtos/aulas.dto'; 
+import { AulaUpdateDto } from './dtos/aulaUpdate.dto';
 
 @Controller('aula')
 export class AulaController {
@@ -34,7 +35,7 @@ export class AulaController {
     }
 
     @Put(':id')
-    async UpdateModulo(@Param() params, @Body() dto: AulaDto) {
+    async UpdateModulo(@Param() params, @Body() dto: AulaUpdateDto) {
         const { id } = params;
         await this.service.updateAula(id, dto);
     }

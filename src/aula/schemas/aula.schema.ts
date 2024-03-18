@@ -15,7 +15,7 @@ export class Aula{
     @Prop({required:true})
     data:string;   
     
-    @Prop()
+    @Prop({default:""})
     conteudo: string;
 
 }

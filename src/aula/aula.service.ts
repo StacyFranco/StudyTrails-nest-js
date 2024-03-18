@@ -2,7 +2,8 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Aula, AulaDocument } from './schemas/aula.schema';
-import { AulaDto } from './dtos/aulas.dto'; 
+import { AulaDto } from './dtos/aulas.dto';
+import { AulaUpdateDto } from './dtos/aulaUpdate.dto';
 import { AulaMessagesHelper } from './helpers/aulaMessages.helper'; 
 
 @Injectable()
@@ -32,7 +33,7 @@ export class AulaService {
 
     }
 
-    async updateAula(aulaId: string, dto: AulaDto) {
+    async updateAula(aulaId: string, dto: AulaUpdateDto) {
         this.logger.debug(`updateAula - ${aulaId}`)
         this.logger.debug(`dto - ${dto.conteudo}`)
         const aula = await this.model.findOne({ _id: aulaId });
@@ -44,7 +45,7 @@ export class AulaService {
         aula.moduloId = dto.moduloId;
         aula.data = dto.data;
         aula.conteudo = dto.conteudo;
-        await this.model.findByIdAndUpdate({ _id: aulaId }, dto);
+        await this.model.findByIdAndUpdate({ _id: aulaId }, aula);
 
     }
     
