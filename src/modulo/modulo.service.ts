@@ -14,6 +14,7 @@ export class ModuloService {
     ) { }
     
     async getModulos() {
+        this.logger.debug('getModulos');
         return this.model.find().exec();
     }
 

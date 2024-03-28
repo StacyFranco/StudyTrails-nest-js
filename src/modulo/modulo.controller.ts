@@ -1,18 +1,22 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Logger } from '@nestjs/common';
 import { ModuloService } from './modulo.service';
 import { ModuloDto } from './dtos/Modulo.dto';
+import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
 
 @Controller('modulo')
 export class ModuloController {
+    private logger = new Logger(ModuloController.name);
     constructor(
         private readonly service: ModuloService
     ) { }
 
     @Get()
+    @ISPublic()
     async getModulos() {
         
-       return await this.service.getModulos();
-
+      const result= await this.service.getModulos();
+      this.logger.debug('getModulos:',result);
+        return result;
        /* return result.map(m => ({
             id: m._id.toString(),
             nome: m.nome,
@@ -22,6 +26,7 @@ export class ModuloController {
     }
     
     @Get(':id')
+    @ISPublic()
     async getModuloById(@Param() params){
         const { id } = params;
 

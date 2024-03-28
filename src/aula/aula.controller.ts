@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put }
 import { AulaService } from './aula.service'; 
 import { AulaDto } from './dtos/aulas.dto'; 
 import { AulaUpdateDto } from './dtos/aulaUpdate.dto';
+import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
 
 @Controller('aula')
 export class AulaController {
@@ -10,6 +11,7 @@ export class AulaController {
     ) { }
 
     @Get('modulo/:id')
+    @ISPublic()
     async getAulas(@Param() params) {
         const { id } = params;
         const result = await this.service.getAulasByModuloId(id);
@@ -23,6 +25,7 @@ export class AulaController {
     }
     
     @Get(':id')
+    @ISPublic()
     async getAulaById(@Param() params){
         const { id } = params;
 
