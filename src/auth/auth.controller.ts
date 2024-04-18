@@ -3,6 +3,7 @@ import { AuthService } from "./auth.service";
 import { LoginDto } from "./dtos/login.dto";
 import { RegisterDto } from "src/user/dtos/register.dto";
 import { ISPublic } from "./decorators/ispublic.decorator";
+import { Role } from "./enums/role.enum";
 
 @Controller('auth')
 export class AuthController{
@@ -17,9 +18,9 @@ export class AuthController{
 
     @Post('register')
     @HttpCode(HttpStatus.OK)
-    //@ISPublic()
+    @ISPublic()
     register(@Body() dto: RegisterDto){
-        dto.adm=false;
+        dto.roles=Role.User;
         return this.authService.register(dto);
     }
    

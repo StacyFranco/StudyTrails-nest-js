@@ -22,7 +22,7 @@ export class AuthService{
         if(user == null){
             throw new BadRequestException(MessageHelper.AUTH_PASSWORD_OR_LOGIN_NOT_FOUND)
         }
-        const tokenPayload = {email: user.email, sub: user._id};
+        const tokenPayload = {email: user.email, sub: user._id, roles: user.roles};
 
         return {
             email: user.email,

@@ -5,8 +5,9 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ModuloModule } from './modulo/modulo.module'
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/guards/jwt.guar';
+import { JwtAuthGuard } from './auth/guards/jwt.guard';
 import { AulaModule } from './aula/aula.module';
+import { RolesGuard } from './auth/guards/roles.guard';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AulaModule } from './aula/aula.module';
   ],
   controllers: [],
   providers: [
-    {provide: APP_GUARD, useClass: JwtAuthGuard},
+    {provide: APP_GUARD, useClass: JwtAuthGuard, },
+    {provide: APP_GUARD, useClass: RolesGuard, },
   ],
 })
 export class AppModule {}

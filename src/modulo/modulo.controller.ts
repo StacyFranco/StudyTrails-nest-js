@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, 
 import { ModuloService } from './modulo.service';
 import { ModuloDto } from './dtos/Modulo.dto';
 import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 @Controller('modulo')
 export class ModuloController {
@@ -34,17 +36,20 @@ export class ModuloController {
     }
 
     @Post()
+    @Roles(Role.Admin)
     async create(@Body() dto: ModuloDto) {
         await this.service.createModulo(dto);
     }
 
     @Put(':id')
+    @Roles(Role.Admin)
     async UpdateModulo(@Param() params, @Body() dto: ModuloDto) {
         const { id } = params;
         await this.service.updateModulo(id, dto);
     }
 
     @Delete(':id')
+    @Roles(Role.Admin)
     @HttpCode(HttpStatus.NO_CONTENT)
     async deleteModulo(@Param() params) {
         const { id } = params;

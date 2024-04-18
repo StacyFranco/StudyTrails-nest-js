@@ -1,5 +1,6 @@
 import { IsEmail, MaxLength, MinLength, Matches, IsString, IsBoolean } from "class-validator";
 import { UserMessagesHelper } from "../helpers/message.helper";
+import { Role } from "src/auth/enums/role.enum";
 
 export class RegisterDto {
 
@@ -19,7 +20,6 @@ export class RegisterDto {
     @IsString()
     avatar: string;
 
-    //@IsBoolean()
-    adm: boolean;
+    roles:Role
 
 }
