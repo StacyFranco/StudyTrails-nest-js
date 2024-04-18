@@ -1,16 +1,16 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
-import { AulaService } from './aula.service'; 
-import { AulaDto } from './dtos/aulas.dto'; 
-import { AulaUpdateDto } from './dtos/aulaUpdate.dto';
+import { AulaService } from './lesson.service'; 
+import { AulaDto } from './dtos/lessons.dto'; 
+import { AulaUpdateDto } from './dtos/lessonUpdate.dto';
 import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
 
-@Controller('aula')
+@Controller('lesson')
 export class AulaController {
     constructor(
         private readonly service: AulaService
     ) { }
 
-    @Get('modulo/:id')
+    @Get('chapter/:id')
     @ISPublic()
     async getAulas(@Param() params) {
         const { id } = params;

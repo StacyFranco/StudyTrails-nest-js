@@ -1,5 +1,5 @@
 import {MinLength, IsString } from "class-validator";
-import { AulaMessagesHelper } from "../helpers/aulaMessages.helper"; 
+import { AulaMessagesHelper } from "../helpers/lessonMessages.helper"; 
 
 export class AulaUpdateDto {
 
@@ -7,7 +7,7 @@ export class AulaUpdateDto {
     nome: string;
 
     @IsString({ message: AulaMessagesHelper.MODULO_NOT_VALID })
-    moduloId: string;
+    chapterId: string;
 
     @MinLength(8,{ message: AulaMessagesHelper.DATE_NOT_VALID })
     data: string;

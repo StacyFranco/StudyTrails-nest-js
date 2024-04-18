@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AulaService } from './aula.service';
-import { AulaController } from './aula.controller';
+import { AulaService } from './lesson.service';
+import { AulaController } from './lesson.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Aula, AulaSchema } from './schemas/aula.schema';
+import { Aula, AulaSchema } from './schemas/lesson.schema';
 
 @Module({
   imports: [ MongooseModule.forFeature([

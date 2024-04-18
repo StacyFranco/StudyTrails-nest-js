@@ -1,5 +1,5 @@
 import {MinLength,IsNumber } from "class-validator";
-import { ModuloMessagesHelper } from "../helpers/moduloMessages.helper";
+import { ModuloMessagesHelper } from "../helpers/chapterMessages.helper";
 
 
 

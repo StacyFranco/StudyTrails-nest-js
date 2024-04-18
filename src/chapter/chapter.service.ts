@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Modulo, ModuloDocument } from './schemas/modulo.schema';
-import { ModuloDto } from './dtos/modulo.dto';
-import { ModuloMessagesHelper } from './helpers/moduloMessages.helper';
+import { Modulo, ModuloDocument } from './schemas/chapter.schema';
+import { ModuloDto } from './dtos/chapter.dto';
+import { ModuloMessagesHelper } from './helpers/chapterMessages.helper';
 
 @Injectable()
 export class ModuloService {
@@ -18,8 +18,8 @@ export class ModuloService {
         return this.model.find().exec();
     }
 
-    async getModuloById(moduloId: string) {
-        return await this.model.findOne({ _id: moduloId });
+    async getModuloById(chapterId: string) {
+        return await this.model.findOne({ _id: chapterId });
     }
 
     async createModulo(dto: ModuloDto) {
@@ -31,21 +31,21 @@ export class ModuloService {
 
     }
 
-    async updateModulo(moduloId: string, dto: ModuloDto) {
-        this.logger.debug(`updateModulo - ${moduloId}`)
-        const modulo = await this.model.findOne({ _id: moduloId });
+    async updateModulo(chapterId: string, dto: ModuloDto) {
+        this.logger.debug(`updateModulo - ${chapterId}`)
+        const chapter = await this.model.findOne({ _id: chapterId });
 
-        if (!modulo) {
+        if (!chapter) {
             throw new BadRequestException(ModuloMessagesHelper.UPDATE_MODULO_NOT_FOUND)
         }
-        modulo.nome = dto.nome;
-        await this.model.findByIdAndUpdate({ _id: moduloId }, modulo);
+        chapter.nome = dto.nome;
+        await this.model.findByIdAndUpdate({ _id: chapterId }, chapter);
 
     }
     
-    async deleteModulo( moduloId: string) {
-        this.logger.debug(`deleteModulo - ${moduloId}`)
-        return await this.model.deleteOne({  _id: moduloId });
+    async deleteModulo( chapterId: string) {
+        this.logger.debug(`deleteModulo - ${chapterId}`)
+        return await this.model.deleteOne({  _id: chapterId });
     }
 
 }

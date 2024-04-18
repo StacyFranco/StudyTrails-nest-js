@@ -10,7 +10,7 @@ export class Aula{
     nome:string;
 
     @Prop({required: true})
-    moduloId: string;
+    chapterId: string;
 
     @Prop({required:true})
     data:string;   

@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Logger } from '@nestjs/common';
-import { ModuloService } from './modulo.service';
-import { ModuloDto } from './dtos/Modulo.dto';
+import { ModuloService } from './chapter.service';
+import { ModuloDto } from './dtos/chapter.dto';
 import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 
-@Controller('modulo')
+@Controller('chapter')
 export class ModuloController {
     private logger = new Logger(ModuloController.name);
     constructor(
