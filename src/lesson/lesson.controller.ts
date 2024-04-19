@@ -3,6 +3,8 @@ import { LessonService } from './lesson.service';
 import { LessonDto } from './dtos/lessons.dto'; 
 import { LessonUpdateDto } from './dtos/lessonUpdate.dto';
 import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 @Controller('lesson')
 export class LessonController {
@@ -33,17 +35,20 @@ export class LessonController {
     }
 
     @Post()
+    @Roles(Role.Admin)
     async create(@Body() dto: LessonDto) {
         await this.service.createLesson(dto);
     }
 
     @Put(':id')
+    @Roles(Role.Admin)
     async UpdateChapter(@Param() params, @Body() dto: LessonUpdateDto) {
         const { id } = params;
         await this.service.updateLesson(id, dto);
     }
 
     @Delete(':id')
+    @Roles(Role.Admin)
     @HttpCode(HttpStatus.NO_CONTENT)
     async deleteChapter(@Param() params) {
         const { id } = params;

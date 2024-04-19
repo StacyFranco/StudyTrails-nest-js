@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Lesson, LessonDocument } from './schemas/lesson.schema';
+import { Chapter, ChapterDocument } from 'src/chapter/schemas/chapter.schema';
 import { LessonDto } from './dtos/lessons.dto';
 import { LessonUpdateDto } from './dtos/lessonUpdate.dto';
 import { LessonMessagesHelper } from './helpers/lessonMessages.helper'; 
@@ -12,10 +13,11 @@ export class LessonService {
 
     constructor(
         @InjectModel(Lesson.name) private readonly model: Model<LessonDocument>,
+        @InjectModel(Chapter.name) private readonly chapterModel: Model<ChapterDocument>,
     ) { }
     
     async getLessonsByChapterId(chapterId: string) {
-        return this.model.find({ chapterId: chapterId });
+        return await this.model.find({ chapterId: chapterId });
     }
 
     async getLessonById(lessonId: string) {
@@ -23,8 +25,9 @@ export class LessonService {
     }
 
     async createLesson(dto: LessonDto) {
-        this.logger.debug('createLesson');
-        const chapterExist = await this.model.findOne({chapterId: dto.chapterId})
+        this.logger.debug('createLesson - chapterID',dto.chapterId);
+        const chapterExist = await this.chapterModel.findOne({_id: dto.chapterId})
+        this.logger.debug("chapterExist:",chapterExist)
         if(!chapterExist){
             throw new BadRequestException(LessonMessagesHelper.CHAPTER_NOT_FOUND)
         }
