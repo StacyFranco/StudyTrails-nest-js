@@ -1,58 +1,58 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Logger } from '@nestjs/common';
-import { ModuloService } from './chapter.service';
-import { ModuloDto } from './dtos/chapter.dto';
+import { ChapterService } from './chapter.service';
+import { ChapterDto } from './dtos/chapter.dto';
 import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 
 @Controller('chapter')
-export class ModuloController {
-    private logger = new Logger(ModuloController.name);
+export class ChapterController {
+    private logger = new Logger(ChapterController.name);
     constructor(
-        private readonly service: ModuloService
+        private readonly service: ChapterService
     ) { }
 
     @Get()
     @ISPublic()
-    async getModulos() {
+    async getChapters() {
         
-      const result= await this.service.getModulos();
-      this.logger.debug('getModulos:',result);
+      const result= await this.service.getChapters();
+      this.logger.debug('getChapters:',result);
         return result;
        /* return result.map(m => ({
             id: m._id.toString(),
-            nome: m.nome,
-            numeroAulas: m.numeroAulas,
-        }) as ModuloDto)
+            name: m.name,
+            numeroLessons: m.numeroLessons,
+        }) as ChapterDto)
         */
     }
     
     @Get(':id')
     @ISPublic()
-    async getModuloById(@Param() params){
+    async getChapterById(@Param() params){
         const { id } = params;
 
-        return await this.service.getModuloById(id);
+        return await this.service.getChapterById(id);
     }
 
     @Post()
     @Roles(Role.Admin)
-    async create(@Body() dto: ModuloDto) {
-        await this.service.createModulo(dto);
+    async create(@Body() dto: ChapterDto) {
+        await this.service.createChapter(dto);
     }
 
     @Put(':id')
     @Roles(Role.Admin)
-    async UpdateModulo(@Param() params, @Body() dto: ModuloDto) {
+    async UpdateChapter(@Param() params, @Body() dto: ChapterDto) {
         const { id } = params;
-        await this.service.updateModulo(id, dto);
+        await this.service.updateChapter(id, dto);
     }
 
     @Delete(':id')
     @Roles(Role.Admin)
     @HttpCode(HttpStatus.NO_CONTENT)
-    async deleteModulo(@Param() params) {
+    async deleteChapter(@Param() params) {
         const { id } = params;
-        await this.service.deleteModulo(id);
+        await this.service.deleteChapter(id);
     }
 }

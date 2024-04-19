@@ -1,14 +1,14 @@
 import {MinLength,IsNumber } from "class-validator";
-import { ModuloMessagesHelper } from "../helpers/chapterMessages.helper";
+import { ChapterMessagesHelper } from "../helpers/chapterMessages.helper";
 
 
 
-export class ModuloDto {
-    @MinLength(2,{message: ModuloMessagesHelper.NAME_NOT_VALID})
-    nome: string;
+export class ChapterDto {
+    @MinLength(2,{message: ChapterMessagesHelper.NAME_NOT_VALID})
+    name: string;
 
-    //@IsNumber({message: ModuloMessagesHelper.REGISTER_NUMBER_CLASSES_NOT_VALID})
-    numeroAulas: number;
+    //@IsNumber({message: ChapterMessagesHelper.REGISTER_NUMBER_CLASSES_NOT_VALID})
+    numberLessons: number;
     
 }
 

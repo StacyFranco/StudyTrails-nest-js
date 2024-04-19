@@ -1,56 +1,56 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Aula, AulaDocument } from './schemas/lesson.schema';
-import { AulaDto } from './dtos/lessons.dto';
-import { AulaUpdateDto } from './dtos/lessonUpdate.dto';
-import { AulaMessagesHelper } from './helpers/lessonMessages.helper'; 
+import { Lesson, LessonDocument } from './schemas/lesson.schema';
+import { LessonDto } from './dtos/lessons.dto';
+import { LessonUpdateDto } from './dtos/lessonUpdate.dto';
+import { LessonMessagesHelper } from './helpers/lessonMessages.helper'; 
 
 @Injectable()
-export class AulaService {
-    private logger = new Logger(AulaService.name);
+export class LessonService {
+    private logger = new Logger(LessonService.name);
 
     constructor(
-        @InjectModel(Aula.name) private readonly model: Model<AulaDocument>,
+        @InjectModel(Lesson.name) private readonly model: Model<LessonDocument>,
     ) { }
     
-    async getAulasByModuloId(chapterId: string) {
+    async getLessonsByChapterId(chapterId: string) {
         return this.model.find({ chapterId: chapterId });
     }
 
-    async getAulaById(lessonId: string) {
+    async getLessonById(lessonId: string) {
         return await this.model.findOne({ _id: lessonId });
     }
 
-    async createAula(dto: AulaDto) {
-        this.logger.debug('createAula');
+    async createLesson(dto: LessonDto) {
+        this.logger.debug('createLesson');
         const chapterExist = await this.model.findOne({chapterId: dto.chapterId})
         if(!chapterExist){
-            throw new BadRequestException(AulaMessagesHelper.MODULO_NOT_FOUND)
+            throw new BadRequestException(LessonMessagesHelper.CHAPTER_NOT_FOUND)
         }
-        const createAula = new this.model(dto);
-        return await createAula.save();
+        const createLesson = new this.model(dto);
+        return await createLesson.save();
 
     }
 
-    async updateAula(lessonId: string, dto: AulaUpdateDto) {
-        this.logger.debug(`updateAula - ${lessonId}`)
-        this.logger.debug(`dto - ${dto.conteudo}`)
+    async updateLesson(lessonId: string, dto: LessonUpdateDto) {
+        this.logger.debug(`updateLesson - ${lessonId}`)
+        this.logger.debug(`dto - ${dto.content}`)
         const lesson = await this.model.findOne({ _id: lessonId });
 
         if (!lesson) {
-            throw new BadRequestException(AulaMessagesHelper.UPDATE_AULA_NOT_FOUND)
+            throw new BadRequestException(LessonMessagesHelper.UPDATE_LESSON_NOT_FOUND)
         }
-        lesson.nome = dto.nome;
-        lesson.chapterId = dto.chapterrId;
+        lesson.name = dto.name;
+        lesson.chapterId = dto.chapterId;
         lesson.data = dto.data;
-        lesson.conteudo = dto.conteudo;
+        lesson.content = dto.content;
         await this.model.findByIdAndUpdate({ _id: lessonId }, lesson);
 
     }
     
-    async deleteAula( lessonId: string) {
-        this.logger.debug(`deleteAula - ${lessonId}`)
+    async deleteLesson( lessonId: string) {
+        this.logger.debug(`deleteLesson - ${lessonId}`)
         return await this.model.deleteOne({  _id: lessonId });
     }
 

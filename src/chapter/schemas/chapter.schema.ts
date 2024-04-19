@@ -1,17 +1,17 @@
 import { Schema,Prop, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { HydratedDocument } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
-export type ModuloDocument = HydratedDocument<Modulo>;
+export type ChapterDocument = HydratedDocument<Chapter>;
 
 @Schema()
-export class Modulo{
+export class Chapter{
     
     @Prop({required: true})
-    nome:string;
+    name:string;
 
     @Prop({default: 0})
-    numeroAulas:number;    
+    numberLessons:number;    
 
 }
 
-export const ModuloSchema = SchemaFactory.createForClass(Modulo);
+export const ChapterSchema = SchemaFactory.createForClass(Chapter);

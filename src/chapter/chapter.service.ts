@@ -1,50 +1,50 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Modulo, ModuloDocument } from './schemas/chapter.schema';
-import { ModuloDto } from './dtos/chapter.dto';
-import { ModuloMessagesHelper } from './helpers/chapterMessages.helper';
+import { Chapter, ChapterDocument } from './schemas/chapter.schema';
+import { ChapterDto } from './dtos/chapter.dto';
+import { ChapterMessagesHelper } from './helpers/chapterMessages.helper';
 
 @Injectable()
-export class ModuloService {
-    private logger = new Logger(ModuloService.name);
+export class ChapterService {
+    private logger = new Logger(ChapterService.name);
 
     constructor(
-        @InjectModel(Modulo.name) private readonly model: Model<ModuloDocument>,
+        @InjectModel(Chapter.name) private readonly model: Model<ChapterDocument>,
     ) { }
     
-    async getModulos() {
-        this.logger.debug('getModulos');
-        return this.model.find().exec();
+    async getChapters() {
+        this.logger.debug('getChapters');
+        return await this.model.find().exec();
     }
 
-    async getModuloById(chapterId: string) {
+    async getChapterById(chapterId: string) {
         return await this.model.findOne({ _id: chapterId });
     }
 
-    async createModulo(dto: ModuloDto) {
-        this.logger.debug('createModulo');
+    async createChapter(dto: ChapterDto) {
+        this.logger.debug('createChapter');
 
 
-        const createModulo = new this.model(dto);
-        return await createModulo.save();
+        const createChapter = new this.model(dto);
+        return await createChapter.save();
 
     }
 
-    async updateModulo(chapterId: string, dto: ModuloDto) {
-        this.logger.debug(`updateModulo - ${chapterId}`)
+    async updateChapter(chapterId: string, dto: ChapterDto) {
+        this.logger.debug(`updateChapter - ${chapterId}`)
         const chapter = await this.model.findOne({ _id: chapterId });
 
         if (!chapter) {
-            throw new BadRequestException(ModuloMessagesHelper.UPDATE_MODULO_NOT_FOUND)
+            throw new BadRequestException(ChapterMessagesHelper.UPDATE_CHAPTER_NOT_FOUND)
         }
-        chapter.nome = dto.nome;
+        chapter.name = dto.name;
         await this.model.findByIdAndUpdate({ _id: chapterId }, chapter);
 
     }
     
-    async deleteModulo( chapterId: string) {
-        this.logger.debug(`deleteModulo - ${chapterId}`)
+    async deleteChapter( chapterId: string) {
+        this.logger.debug(`deleteChapter - ${chapterId}`)
         return await this.model.deleteOne({  _id: chapterId });
     }
 

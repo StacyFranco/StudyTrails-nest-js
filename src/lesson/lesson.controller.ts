@@ -1,52 +1,52 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
-import { AulaService } from './lesson.service'; 
-import { AulaDto } from './dtos/lessons.dto'; 
-import { AulaUpdateDto } from './dtos/lessonUpdate.dto';
+import { LessonService } from './lesson.service'; 
+import { LessonDto } from './dtos/lessons.dto'; 
+import { LessonUpdateDto } from './dtos/lessonUpdate.dto';
 import { ISPublic } from 'src/auth/decorators/ispublic.decorator';
 
 @Controller('lesson')
-export class AulaController {
+export class LessonController {
     constructor(
-        private readonly service: AulaService
+        private readonly service: LessonService
     ) { }
 
     @Get('chapter/:id')
     @ISPublic()
-    async getAulas(@Param() params) {
+    async getLessons(@Param() params) {
         const { id } = params;
-        const result = await this.service.getAulasByModuloId(id);
+        const result = await this.service.getLessonsByChapterId(id);
 
         return result.map(m => ({
             id: m._id.toString(),
-            nome: m.nome,
+            name: m.name,
             data: m.data,
-        }) as AulaDto)
+        }) as LessonDto)
         
     }
     
     @Get(':id')
     @ISPublic()
-    async getAulaById(@Param() params){
+    async getLessonById(@Param() params){
         const { id } = params;
 
-        return await this.service.getAulaById(id);
+        return await this.service.getLessonById(id);
     }
 
     @Post()
-    async create(@Body() dto: AulaDto) {
-        await this.service.createAula(dto);
+    async create(@Body() dto: LessonDto) {
+        await this.service.createLesson(dto);
     }
 
     @Put(':id')
-    async UpdateModulo(@Param() params, @Body() dto: AulaUpdateDto) {
+    async UpdateChapter(@Param() params, @Body() dto: LessonUpdateDto) {
         const { id } = params;
-        await this.service.updateAula(id, dto);
+        await this.service.updateLesson(id, dto);
     }
 
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async deleteModulo(@Param() params) {
+    async deleteChapter(@Param() params) {
         const { id } = params;
-        await this.service.deleteAula(id);
+        await this.service.deleteLesson(id);
     }
 }

@@ -1,17 +1,17 @@
 import {MinLength, IsString } from "class-validator";
-import { AulaMessagesHelper } from "../helpers/lessonMessages.helper"; 
+import { LessonMessagesHelper } from "../helpers/lessonMessages.helper"; 
 
-export class AulaDto {
+export class LessonDto {
 
     id: string;
 
-    @MinLength(2, { message: AulaMessagesHelper.NAME_NOT_VALID })
-    nome: string;
+    @MinLength(2, { message: LessonMessagesHelper.NAME_NOT_VALID })
+    name: string;
 
-    @IsString({ message: AulaMessagesHelper.MODULO_NOT_VALID })
+    @IsString({ message: LessonMessagesHelper.CHAPTER_NOT_VALID })
     chapterId: string;
 
-    @MinLength(8,{ message: AulaMessagesHelper.DATE_NOT_VALID })
+    @MinLength(8,{ message: LessonMessagesHelper.DATE_NOT_VALID })
     data: string;
   
 }
